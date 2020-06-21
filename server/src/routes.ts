@@ -26,6 +26,16 @@ routes.get('/products', async function(req: Request, res: Response) {
     return res.json(products);
 });
 
+routes.get('/collection_points', async function(req: Request, res: Response) {
+
+    var collection_points = await knex('collection_points')
+        .distinct()
+        .select('*');
+
+
+    return res.json(collection_points);
+});
+
 routes.post('/collection_points', async function(req: Request, res: Response) {
     const {
         name,
