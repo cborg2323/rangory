@@ -18,7 +18,7 @@ App do Desafio Be Growth (2° Etapa).
 * Fazer a aplicação utilizando Node
 
 ## Modelagem
-img
+![](./rangory-model.png)
 
 ## Diretórios importantes
 * Back-end (server)
