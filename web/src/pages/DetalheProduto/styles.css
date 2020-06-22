@@ -1,0 +1,36 @@
+#page-detalhe {
+  width: 740px;
+  margin: 50px auto 0 auto;
+}
+
+.details {
+  width: 350px;
+  float: left;
+  margin-top: 30px;
+  text-decoration: none;
+  color: #111;
+}
+
+#page-detalhe .details + .details {
+  margin-left: 40px;
+}
+
+.details img {
+  border-radius: 15px;
+  width: 300px;
+  height: 200px;
+}
+
+form button {
+  width: 160px;
+  height: 40px;
+  background: #FC4445;
+  border-radius: 8px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 16px;
+  border: 0;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}

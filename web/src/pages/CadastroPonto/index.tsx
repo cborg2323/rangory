@@ -12,11 +12,11 @@ const CadastroPonto: React.FC = () => {
         email: '',
         whatsapp: '',
         uf: '',
-        cidade: '',
+        city: '',
         neighborhood: '',
-        rua: '',
-        numero: '',
-        complemento: '',
+        street: '',
+        number: '',
+        complement: '',
     });
 
     const history = useHistory();
@@ -30,18 +30,18 @@ const CadastroPonto: React.FC = () => {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        const { name, email, whatsapp, uf, cidade, rua, numero, complemento, neighborhood } = formData;
+        const { name, email, whatsapp, uf, city, street, number, complement, neighborhood } = formData;
 
         const data = {
             name, 
             email, 
             whatsapp, 
             uf, 
-            city: cidade,
+            city,
             neighborhood,
-            street: rua,
-            number: numero, 
-            complement: complemento,
+            street,
+            number, 
+            complement,
             img_url: '',
         };
 
@@ -93,7 +93,7 @@ const CadastroPonto: React.FC = () => {
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">E-mail</label>
+                            <label htmlFor="email">E-mail</label>
                             <input 
                                 type="text"
                                 name="email"
@@ -113,7 +113,7 @@ const CadastroPonto: React.FC = () => {
                             />
                     </div>
                     <div className="field">
-                            <label htmlFor="name">UF</label>
+                            <label htmlFor="uf">UF</label>
                             <input 
                                 type="text"
                                 name="uf"
@@ -122,11 +122,11 @@ const CadastroPonto: React.FC = () => {
                             />
                     </div>
                     <div className="field">
-                            <label htmlFor="name">Cidade</label>
+                            <label htmlFor="city">Cidade</label>
                             <input 
                                 type="text"
-                                name="cidade"
-                                id="cidade"
+                                name="city"
+                                id="city"
                                 onChange={handleInputChange}
                             />
                     </div>
@@ -142,31 +142,31 @@ const CadastroPonto: React.FC = () => {
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">Rua</label>
+                            <label htmlFor="street">Rua</label>
                             <input 
                                 type="text"
-                                name="rua"
-                                id="rua"
+                                name="street"
+                                id="street"
                                 onChange={handleInputChange}
                             />
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">Número</label>
+                            <label htmlFor="number">Número</label>
                             <input 
                                 type="text"
-                                name="numero"
-                                id="numero"
+                                name="number"
+                                id="number"
                                 onChange={handleInputChange}
                             />
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">Complemento</label>
+                            <label htmlFor="complement">Complemento</label>
                             <input 
                                 type="text"
-                                name="complemento"
-                                id="complemento"
+                                name="complement"
+                                id="complement"
                                 onChange={handleInputChange}
                             />
                     </div>

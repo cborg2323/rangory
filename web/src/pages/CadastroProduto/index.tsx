@@ -17,9 +17,8 @@ const Cadastro: React.FC = () => {
     const [formData, setFormData] = useState({
         name: '',
         img_url: '',
-        preco: '',
-        validade: '',
-        ponto: '',
+        price: '',
+        validity: '',
     });
 
     const [pontoSelecionado, setpontoSelecionado] = useState('0');
@@ -49,15 +48,15 @@ const Cadastro: React.FC = () => {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        const { name, preco, validade, img_url } = formData;
+        const { name, price, validity, img_url } = formData;
 
         const ponto = pontoSelecionado;
 
 
         const data = {
             name, 
-            price: preco,
-            validity: validade,
+            price,
+            validity,
             collection_point_id: ponto,
             img_url
         };
@@ -102,7 +101,7 @@ const Cadastro: React.FC = () => {
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">Imagem (url)</label>
+                            <label htmlFor="img_url">Imagem (url)</label>
                             <input 
                                 type="text"
                                 name="img_url"
@@ -113,28 +112,28 @@ const Cadastro: React.FC = () => {
                    
 
                     <div className="field">
-                            <label htmlFor="name">Preço (R$)</label>
+                            <label htmlFor="price">Preço (R$)</label>
                             <input 
                                 type="number"
                                 step="0.1"
-                                name="preco"
-                                id="preco"
+                                name="price"
+                                id="price"
                                 onChange={handleInputChange}
                             />
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">Validade</label>
+                            <label htmlFor="validity">Validade</label>
                             <input 
                                 type="date"
-                                name="validade"
-                                id="validade"
+                                name="validity"
+                                id="validity"
                                 onChange={handleInputChange}
                             />
                     </div>
 
                     <div className="field">
-                            <label htmlFor="name">Ponto de coleta</label>
+                            <label htmlFor="ponto">Ponto de coleta</label>
                             <select  
                                 name="ponto"
                                 id="ponto"
