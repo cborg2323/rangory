@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import './styles.css';
@@ -12,10 +13,13 @@ const CadastroPonto: React.FC = () => {
         whatsapp: '',
         uf: '',
         cidade: '',
+        neighborhood: '',
         rua: '',
         numero: '',
         complemento: '',
     });
+
+    const history = useHistory();
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
@@ -26,24 +30,37 @@ const CadastroPonto: React.FC = () => {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        const { name, email, whatsapp, uf, cidade, rua, numero, complemento } = formData;
+        const { name, email, whatsapp, uf, cidade, rua, numero, complemento, neighborhood } = formData;
 
         const data = {
             name, 
             email, 
             whatsapp, 
             uf, 
-            city: cidade, 
-            street: rua, 
+            city: cidade,
+            neighborhood,
+            street: rua,
             number: numero, 
             complement: complemento,
-            latitude: 0,
-            longitude: 0,
             img_url: '',
         };
 
-        await axios.post('http://localhost:3333/collection_points', data);
-        console.log(data);
+        let flagError = 0;
+        await axios.post('http://localhost:3333/collection_points', data)
+            .catch((error) => {
+            if (error.response) {
+                // Request made and server responded
+                console.log(error.response.data);
+            }
+            flagError = 1;
+        });
+    
+    
+        if(flagError === 0) {
+            alert('Ponto de coleta criado!');
+                
+            history.push('/selecao_cadastro');
+        }
 
     }
 
@@ -56,7 +73,7 @@ const CadastroPonto: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <h1>Cadastro do <br/> ponto de coleta</h1>
                     <div className="field">
-                            <label htmlFor="name">Nome do ponto</label>
+                            <label htmlFor="name">Nome</label>
                             <input 
                                 type="text"
                                 name="name"
@@ -64,6 +81,17 @@ const CadastroPonto: React.FC = () => {
                                 onChange={handleInputChange}
                             />
                     </div>
+
+                    <div className="field">
+                            <label htmlFor="img_url">Imagem (url)</label>
+                            <input 
+                                type="text"
+                                name="img_url"
+                                id="img_url"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
                     <div className="field">
                             <label htmlFor="name">E-mail</label>
                             <input 
@@ -99,6 +127,16 @@ const CadastroPonto: React.FC = () => {
                                 type="text"
                                 name="cidade"
                                 id="cidade"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <div className="field">
+                            <label htmlFor="neighborhood">Bairro</label>
+                            <input 
+                                type="text"
+                                name="neighborhood"
+                                id="neighborhood"
                                 onChange={handleInputChange}
                             />
                     </div>

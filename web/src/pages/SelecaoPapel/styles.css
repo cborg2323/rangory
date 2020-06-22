@@ -1,0 +1,16 @@
+#page-selecao-papel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+#page-selecao-papel div + div {
+  margin-left: 50px;
+}
+
+.papel-escolha img {
+  height: 400px;
+  width: 350px;
+  border-radius: 20px;
+}
