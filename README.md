@@ -39,3 +39,9 @@ App do Desafio Be Growth (2° Etapa).
 * Front-end
   * ReactJS - biblioteca JavaScript de código aberto com foco em criar interfaces de usuário em páginas web;
   * axios - cliente HTTP baseado em Promise para navegador e node.js.
+
+## App on
+### Server side
+* npm install
+* npm run dev
+* **extra** atualizando pacotes obsoletos do packeg.json: ncu / ncu -u
