@@ -45,3 +45,7 @@ App do Desafio Be Growth (2° Etapa).
 * npm install
 * npm run dev
 * **extra** atualizando pacotes obsoletos do packeg.json: ncu / ncu -u
+
+### Front side (web folder)
+* npm install
+* npm start
