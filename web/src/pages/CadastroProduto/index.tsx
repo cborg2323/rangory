@@ -89,38 +89,32 @@ const Cadastro: React.FC = () => {
             <div id="page-create-point">
 
                 <form onSubmit={handleSubmit}>
-                    <h1>Cadastro do produto</h1>
+
+                    <h1>Cadastro de produto(s)</h1>
+
+
                     <div className="field">
-                            <label htmlFor="name">Nome</label>
+                            <label htmlFor="name">Descrição do produto</label>
                             <input 
                                 type="text"
                                 name="name"
                                 id="name"
-                                onChange={handleInputChange}
-                            />
-                    </div>
-
-                    <div className="field">
-                            <label htmlFor="img_url">Imagem (url)</label>
-                            <input 
-                                type="text"
-                                name="img_url"
-                                id="img_url"
+                                placeholder="Ex: Macarrão espaguete 500gr"
                                 onChange={handleInputChange}
                             />
                     </div>
                    
 
-                    <div className="field">
-                            <label htmlFor="price">Preço (R$)</label>
+                    {/* <div className="field">
+                            <label htmlFor="price">Quantidade</label>
                             <input 
                                 type="number"
-                                step="0.1"
+                                step="1"
                                 name="price"
                                 id="price"
                                 onChange={handleInputChange}
                             />
-                    </div>
+                    </div> */}
 
                     <div className="field">
                             <label htmlFor="validity">Validade</label>
@@ -132,7 +126,7 @@ const Cadastro: React.FC = () => {
                             />
                     </div>
 
-                    <div className="field">
+                    {/* <div className="field">
                             <label htmlFor="ponto">Ponto de coleta</label>
                             <select  
                                 name="ponto"
@@ -145,6 +139,16 @@ const Cadastro: React.FC = () => {
                                     <option key={ponto.id} value={ponto.id}>{ponto.name}</option>
                                 ))}
                             </select>
+                    </div> */}
+
+                    <div className="field">
+                            <label htmlFor="CEP">CEP</label>
+                            <input 
+                                type="text"
+                                name="cep"
+                                id="cep"
+                                onChange={handleInputChange}
+                            />
                     </div>
 
                     <button type="submit">
