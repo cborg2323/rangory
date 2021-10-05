@@ -6,6 +6,7 @@ import InputMask from 'react-input-mask';
 import './styles.css';
 import Header from '../../components/Header';
 import { forEachLeadingCommentRange } from 'typescript';
+import internal from 'stream';
 
 interface PontoResponse {
     id: number;
@@ -15,16 +16,24 @@ interface PontoResponse {
 interface CepResponse {
     uf: string;
     localidade: string;
+    logradouro: string;
+    numero: number;
+    bairro: string;
 }
 
 const Cadastro: React.FC = () => {
     
     const [pontos, setPontos] = useState<PontoResponse[]>([]);
+    const [uf, setUF] = useState<string>();
+    const [cidade, setCidade] = useState<string>();
+    const [logradouro, setLogradouro] = useState<string>();
+    const [bairro, setBairro] = useState<string>();
 
     const [formData, setFormData] = useState({
         name: '',
         validity: '',
         cep: '',
+        numero: ''
     });
 
     const [pontoSelecionado, setpontoSelecionado] = useState('0');
@@ -45,6 +54,10 @@ const Cadastro: React.FC = () => {
         setFormData( {...formData, [name]: value} );
     }
 
+    function handleInputChangeCep(event: ChangeEvent<HTMLInputElement>) {
+        
+    }
+
     function handlePontoSelecionado(event: ChangeEvent<HTMLSelectElement>) {
         const ponto = event.target.value;
 
@@ -54,12 +67,15 @@ const Cadastro: React.FC = () => {
     async function handleConsultaCep(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
 
-        const cep = formData;
+        const cep = formData.cep;
 
         axios.get<CepResponse>('https://viacep.com.br/ws/' + cep + '/json/').then(response => {
             const dadosCep = response.data;
 
-
+            setCidade(dadosCep.localidade);
+            setUF(dadosCep.uf);
+            setLogradouro(dadosCep.logradouro)
+            setBairro(dadosCep.bairro)
             console.log(dadosCep.uf);
         });
     }
@@ -192,6 +208,7 @@ const Cadastro: React.FC = () => {
                                 type="text"
                                 name="uf"
                                 id="uf"
+                                value={uf}
                                 onChange={handleInputChange}
                             />
                     </div>
@@ -201,6 +218,39 @@ const Cadastro: React.FC = () => {
                                 type="text"
                                 name="city"
                                 id="city"
+                                value={cidade}
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <div className="field">
+                            <label htmlFor="bairro">Bairro</label>
+                            <input 
+                                type="text"
+                                name="bairro"
+                                id="bairro"
+                                value={bairro}
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <div className="field">
+                            <label htmlFor="logradouro">Logradouro</label>
+                            <input 
+                                type="text"
+                                name="logradouro"
+                                id="logradouro"
+                                value={logradouro}
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <div className="field">
+                            <label htmlFor="numero">Número</label>
+                            <input 
+                                type="number"
+                                name="numero"
+                                id="numero"
                                 onChange={handleInputChange}
                             />
                     </div>
