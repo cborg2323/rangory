@@ -23,8 +23,8 @@ const Cadastro: React.FC = () => {
 
     const [formData, setFormData] = useState({
         name: '',
-        cep: '',
         validity: '',
+        cep: '',
     });
 
     const [pontoSelecionado, setpontoSelecionado] = useState('0');
@@ -51,11 +51,16 @@ const Cadastro: React.FC = () => {
         setpontoSelecionado(ponto);
     }
 
-    async function handleConsultaCep() {
-        axios.get<CepResponse[]>('https://viacep.com.br/ws/' + '38140000' + '/json/').then(response => {
+    async function handleConsultaCep(event: React.MouseEvent<HTMLElement>) {
+        event.preventDefault();
+
+        const cep = formData;
+
+        axios.get<CepResponse>('https://viacep.com.br/ws/' + cep + '/json/').then(response => {
             const dadosCep = response.data;
 
-            console.log(dadosCep[0].uf);
+
+            console.log(dadosCep.uf);
         });
     }
 
@@ -177,11 +182,11 @@ const Cadastro: React.FC = () => {
                             />
                     </div>
 
-                    <button type="submit">
+                    <button type="button" onClick={handleConsultaCep}>
                         Consultar
                     </button>
 
-                    {/* <div className="field">
+                    <div className="field">
                             <label htmlFor="uf">UF</label>
                             <input 
                                 type="text"
@@ -202,7 +207,7 @@ const Cadastro: React.FC = () => {
 
                     <button type="submit">
                         Consultar
-                    </button> */}
+                    </button>
                     
                 </form>
 
