@@ -1,13 +1,20 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
+import React, { useEffect, useState, ChangeEvent, FormEvent, MouseEventHandler } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
 
 import './styles.css';
 import Header from '../../components/Header';
+import { forEachLeadingCommentRange } from 'typescript';
 
 interface PontoResponse {
     id: number;
     name: string;
+}
+
+interface CepResponse {
+    uf: string;
+    localidade: string;
 }
 
 const Cadastro: React.FC = () => {
@@ -16,8 +23,7 @@ const Cadastro: React.FC = () => {
 
     const [formData, setFormData] = useState({
         name: '',
-        img_url: '',
-        price: '',
+        cep: '',
         validity: '',
     });
 
@@ -45,12 +51,28 @@ const Cadastro: React.FC = () => {
         setpontoSelecionado(ponto);
     }
 
+    async function handleConsultaCep() {
+        axios.get<CepResponse[]>('https://viacep.com.br/ws/' + '38140000' + '/json/').then(response => {
+            const dadosCep = response.data;
+
+            console.log(dadosCep[0].uf);
+        });
+    }
+
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        const { name, price, validity, img_url } = formData;
+        const { name, validity, cep } = formData;
 
-        const ponto = pontoSelecionado;
+        axios.get<CepResponse>('https://viacep.com.br/ws/' + cep + '/json/').then(response => {
+            const dadosCep = response.data;
+
+            console.log(dadosCep.uf);
+            console.log(dadosCep.localidade);
+            alert(dadosCep.localidade + ' - ' + dadosCep.uf);
+        });
+
+        /* const ponto = pontoSelecionado;
 
 
         const data = {
@@ -77,7 +99,7 @@ const Cadastro: React.FC = () => {
             alert('Produto cadastrado!');
                 
             history.push('/produtos');
-        }
+        } */
         
 
     }
@@ -92,6 +114,7 @@ const Cadastro: React.FC = () => {
 
                     <h1>Cadastro de produto(s)</h1>
 
+                    <h2>Informações do produto</h2>
 
                     <div className="field">
                             <label htmlFor="name">Descrição do produto</label>
@@ -141,19 +164,45 @@ const Cadastro: React.FC = () => {
                             </select>
                     </div> */}
 
+                    <h2>Ponto de coleta</h2>
+
                     <div className="field">
                             <label htmlFor="CEP">CEP</label>
-                            <input 
+                            <InputMask 
                                 type="text"
                                 name="cep"
                                 id="cep"
+                                mask="99999-999"
                                 onChange={handleInputChange}
                             />
                     </div>
 
                     <button type="submit">
-                        Cadastrar
+                        Consultar
                     </button>
+
+                    {/* <div className="field">
+                            <label htmlFor="uf">UF</label>
+                            <input 
+                                type="text"
+                                name="uf"
+                                id="uf"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+                    <div className="field">
+                            <label htmlFor="city">Cidade</label>
+                            <input 
+                                type="text"
+                                name="city"
+                                id="city"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <button type="submit">
+                        Consultar
+                    </button> */}
                     
                 </form>
 
