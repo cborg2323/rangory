@@ -3,11 +3,13 @@ import { celebrate, Joi } from 'celebrate';
 
 import CollectionPointsController from './controllers/CollectionPointsController';
 import ProductsController from './controllers/ProductsController';
+import ProductsListController from './controllers/ProductsListController';
 
 const routes = express.Router();
 
 const collectionPointsController = new CollectionPointsController();
 const productsController = new ProductsController();
+const productsListController = new ProductsListController();
 
 routes.get('/products', productsController.index);
 routes.get('/products/:id', productsController.show);
@@ -29,6 +31,8 @@ routes.post('/products', celebrate({
 
 routes.get('/collection_points', collectionPointsController.index);
 
+routes.get('/products_list', productsListController.index);
+
 routes.post('/collection_points', celebrate({
     body: Joi.object().keys({
         name: Joi.string().required(),
@@ -45,6 +49,8 @@ routes.post('/collection_points', celebrate({
 }, {
     abortEarly: false
 }),  collectionPointsController.create);
+
+
 
 
 

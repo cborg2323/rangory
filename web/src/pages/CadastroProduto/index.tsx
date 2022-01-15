@@ -8,9 +8,11 @@ import Header from '../../components/Header';
 import { forEachLeadingCommentRange } from 'typescript';
 import internal from 'stream';
 
-interface PontoResponse {
-    id: number;
-    name: string;
+
+
+interface ProdutoResponse {
+    productId: number;
+    productName: string;
 }
 
 interface CepResponse {
@@ -23,7 +25,7 @@ interface CepResponse {
 
 const Cadastro: React.FC = () => {
     
-    const [pontos, setPontos] = useState<PontoResponse[]>([]);
+    const [produtos, setProdutos] = useState<ProdutoResponse[]>([]);
     const [uf, setUF] = useState<string>();
     const [cidade, setCidade] = useState<string>();
     const [logradouro, setLogradouro] = useState<string>();
@@ -47,12 +49,12 @@ const Cadastro: React.FC = () => {
     const history = useHistory();
 
     useEffect(() => {
-        axios.get<PontoResponse[]>('http://localhost:3333/collection_points').then(response => {
+        axios.get<ProdutoResponse[]>('http://localhost:3333/products_list').then(response => {
             const produtosIniciais = response.data;
 
-            var produtos = [ {id: 1, name: 'Arroz agulhinha'}, {id: 2, name: 'Feijão Telo'} ]
+            
             console.log(produtosIniciais);
-            setPontos(produtos);
+            setProdutos(produtosIniciais);
         });
     }, []);
 
@@ -148,8 +150,8 @@ const Cadastro: React.FC = () => {
                                 onChange={handleProdutoSelecionado}
                             >
                                 <option value="0">Selecione um produto</option>
-                                {pontos.map(ponto => (
-                                    <option key={ponto.id} value={ponto.id}>{ponto.name}</option>
+                                {produtos.map(produto => (
+                                    <option key={produto.productId} value={produto.productId}>{produto.productName}</option>
                                 ))}
                             </select>
                     </div>

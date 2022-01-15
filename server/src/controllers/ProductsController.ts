@@ -16,8 +16,6 @@ class ProductsController {
                 'products.img_url as productImg',
                 '*');
     
-        console.log(products);
-    
         
         if (typeof city !== 'undefined') {
             products = products.filter(product => product.city === city);
