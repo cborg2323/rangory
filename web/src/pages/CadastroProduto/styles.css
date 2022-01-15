@@ -157,6 +157,28 @@
   #page-create-point form button:hover {
     background: #2FB86E;
   }
+
+  div#buttons {
+    margin-bottom: 42px;
+
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+  }
+
+  div#buttons button {
+    width: 120px;
+    height: 40px;
+    margin-left: 10px;
+  }
+
+  div#buttons button#limpar {
+    background: #777;
+  }
+
+  div#buttons button#limpar:hover {
+    background: #2FB86E;
+  }
   
   .items-grid {
     display: grid;

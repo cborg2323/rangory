@@ -33,18 +33,26 @@ const Cadastro: React.FC = () => {
         name: '',
         validity: '',
         cep: '',
-        numero: ''
+        numero: '',
+        cidade: '',
+        bairro: '',
+        logradouro: '',
+        complemento: '',
+        telefone: '',
+        email: '',
     });
 
-    const [pontoSelecionado, setpontoSelecionado] = useState('0');
+    const [produtoSelecionado, setProdutoSelecionado] = useState('0');
 
     const history = useHistory();
 
     useEffect(() => {
         axios.get<PontoResponse[]>('http://localhost:3333/collection_points').then(response => {
-            const pontosIniciais = response.data;
+            const produtosIniciais = response.data;
 
-            setPontos(pontosIniciais);
+            var produtos = [ {id: 1, name: 'Arroz agulhinha'}, {id: 2, name: 'Feijão Telo'} ]
+            console.log(produtosIniciais);
+            setPontos(produtos);
         });
     }, []);
 
@@ -55,13 +63,13 @@ const Cadastro: React.FC = () => {
     }
 
     function handleInputChangeCep(event: ChangeEvent<HTMLInputElement>) {
-        
+
     }
 
-    function handlePontoSelecionado(event: ChangeEvent<HTMLSelectElement>) {
-        const ponto = event.target.value;
+    function handleProdutoSelecionado(event: ChangeEvent<HTMLSelectElement>) {
+        const produto = event.target.value;
 
-        setpontoSelecionado(ponto);
+        setProdutoSelecionado(produto);
     }
 
     async function handleConsultaCep(event: React.MouseEvent<HTMLElement>) {
@@ -83,25 +91,19 @@ const Cadastro: React.FC = () => {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        const { name, validity, cep } = formData;
-
-        axios.get<CepResponse>('https://viacep.com.br/ws/' + cep + '/json/').then(response => {
-            const dadosCep = response.data;
-
-            console.log(dadosCep.uf);
-            console.log(dadosCep.localidade);
-            alert(dadosCep.localidade + ' - ' + dadosCep.uf);
-        });
-
-        /* const ponto = pontoSelecionado;
-
+        const { name, validity, cep, numero, cidade, bairro, logradouro, complemento, telefone, email } = formData;
 
         const data = {
-            name, 
-            price,
+            name,
             validity,
-            collection_point_id: ponto,
-            img_url
+            cep,
+            numero,
+            cidade,
+            bairro,
+            logradouro,
+            complemento,
+            telefone,
+            email,
         };
 
         let flagError = 0; 
@@ -120,7 +122,7 @@ const Cadastro: React.FC = () => {
             alert('Produto cadastrado!');
                 
             history.push('/produtos');
-        } */
+        }
         
 
     }
@@ -139,26 +141,18 @@ const Cadastro: React.FC = () => {
 
                     <div className="field">
                             <label htmlFor="name">Descrição do produto</label>
-                            <input 
-                                type="text"
+                            <select  
                                 name="name"
                                 id="name"
-                                placeholder="Ex: Macarrão espaguete 500gr"
-                                onChange={handleInputChange}
-                            />
+                                value={produtoSelecionado}
+                                onChange={handleProdutoSelecionado}
+                            >
+                                <option value="0">Selecione um produto</option>
+                                {pontos.map(ponto => (
+                                    <option key={ponto.id} value={ponto.id}>{ponto.name}</option>
+                                ))}
+                            </select>
                     </div>
-                   
-
-                    {/* <div className="field">
-                            <label htmlFor="price">Quantidade</label>
-                            <input 
-                                type="number"
-                                step="1"
-                                name="price"
-                                id="price"
-                                onChange={handleInputChange}
-                            />
-                    </div> */}
 
                     <div className="field">
                             <label htmlFor="validity">Validade</label>
@@ -170,20 +164,6 @@ const Cadastro: React.FC = () => {
                             />
                     </div>
 
-                    {/* <div className="field">
-                            <label htmlFor="ponto">Ponto de coleta</label>
-                            <select  
-                                name="ponto"
-                                id="ponto"
-                                value={pontoSelecionado}
-                                onChange={handlePontoSelecionado}
-                            >
-                                <option value="0">Selecione um ponto</option>
-                                {pontos.map(ponto => (
-                                    <option key={ponto.id} value={ponto.id}>{ponto.name}</option>
-                                ))}
-                            </select>
-                    </div> */}
 
                     <h2>Ponto de coleta</h2>
 
@@ -198,9 +178,19 @@ const Cadastro: React.FC = () => {
                             />
                     </div>
 
-                    <button type="button" onClick={handleConsultaCep}>
-                        Consultar
-                    </button>
+                    <div id="buttons">
+
+                        <button id="limpar" type="button" onClick={handleConsultaCep}>
+                            Limpar
+                        </button>
+
+                        <button type="button" onClick={handleConsultaCep}>
+                            Consultar
+                        </button>
+
+                    </div>
+
+                    
 
                     <div className="field">
                             <label htmlFor="uf">UF</label>
@@ -255,8 +245,40 @@ const Cadastro: React.FC = () => {
                             />
                     </div>
 
+                    <div className="field">
+                            <label htmlFor="complemento">Complemento</label>
+                            <input 
+                                type="text"
+                                name="complemento"
+                                id="complemento"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <h2>Contato</h2>
+                    <div className="field">
+                            <label htmlFor="telefone">Telefone</label>
+                            <input 
+                                type="text"
+                                name="telefone"
+                                id="telefone"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+                    <div className="field">
+                            <label htmlFor="email">Email</label>
+                            <input 
+                                type="text"
+                                name="email"
+                                id="email"
+                                onChange={handleInputChange}
+                            />
+                    </div>
+
+
                     <button type="submit">
-                        Consultar
+                        Cadastrar
                     </button>
                     
                 </form>
